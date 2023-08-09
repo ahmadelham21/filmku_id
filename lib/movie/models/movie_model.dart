@@ -1,26 +1,120 @@
-class MovieResponseModel {
-  final int page;
-  final List<MovieModel> MovieModels;
-  final int totalPages;
-  final int totalMovieModels;
+class MovieResponseResponse {
+  int? page;
+  List<MovieResponseResponseResults>? results;
+  int? totalPages;
+  int? totalResults;
 
-  MovieResponseModel({
-    required this.page,
-    required this.MovieModels,
-    required this.totalPages,
-    required this.totalMovieModels,
-  });
+  MovieResponseResponse({this.page, this.results, this.totalPages, this.totalResults});
 
-  factory MovieResponseModel.fromJson(Map<String, dynamic> json) =>
-      MovieResponseModel(
-        page: json["page"],
-        MovieModels: List<MovieModel>.from(
-            json["MovieModels"].map((x) => MovieModel.fromJson(x))),
-        totalPages: json["total_pages"],
-        totalMovieModels: json["total_MovieModels"],
-      );
+  MovieResponseResponse.fromJson(Map<String, dynamic> json) {
+    page = json['page'];
+    if (json['results'] != null) {
+      results = <MovieResponseResponseResults>[];
+      json['results'].forEach((v) {
+        results!.add(MovieResponseResponseResults.fromJson(v));
+      });
+    }
+    totalPages = json['total_pages'];
+    totalResults = json['total_results'];
+  }
 
-  get results => null;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    if (results != null) {
+      data['results'] = results!.map((v) => v.toJson()).toList();
+    }
+    data['total_pages'] = totalPages;
+    data['total_results'] = totalResults;
+    return data;
+  }
+}
+
+class MovieResponseResponseResults {
+  bool? adult;
+  String? backdropPath;
+  List<int>? genreIds;
+  int? id;
+  String? originalLanguage;
+  String? originalTitle;
+  String? overview;
+  double? popularity;
+  String? posterPath;
+  String? releaseDate;
+  String? title;
+  bool? video;
+  num? voteAverage;
+  int? voteCount;
+
+  MovieResponseResponseResults(
+      {this.adult,
+      this.backdropPath,
+      this.genreIds,
+      this.id,
+      this.originalLanguage,
+      this.originalTitle,
+      this.overview,
+      this.popularity,
+      this.posterPath,
+      this.releaseDate,
+      this.title,
+      this.video,
+      this.voteAverage,
+      this.voteCount});
+
+  MovieResponseResponseResults.fromJson(Map<String, dynamic> json) {
+    adult = json['adult'];
+    backdropPath = json['backdrop_path'];
+    genreIds = json['genre_ids'].cast<int>();
+    id = json['id'];
+    originalLanguage = json['original_language'];
+    originalTitle = json['original_title'];
+    overview = json['overview'];
+    popularity = json['popularity'];
+    posterPath = json['poster_path'];
+    releaseDate = json['release_date'];
+    title = json['title'];
+    video = json['video'];
+    voteAverage = json['vote_average'];
+    voteCount = json['vote_count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['genre_ids'] = genreIds;
+    data['id'] = id;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
+    data['overview'] = overview;
+    data['popularity'] = popularity;
+    data['poster_path'] = posterPath;
+    data['release_date'] = releaseDate;
+    data['title'] = title;
+    data['video'] = video;
+    data['vote_average'] = voteAverage;
+    data['vote_count'] = voteCount;
+    return data;
+  }
+}
+
+extension MovieModelMapper on MovieResponseResponse {
+  List<MovieModel> get toMovieModels {
+    return results?.map((e) {
+          return MovieModel(
+            id: e.id ?? 0,
+            originalTitle: e.originalTitle ?? '',
+            overview: e.overview ?? '',
+            popularity: e.popularity ?? 0,
+            releaseDate: DateTime.parse(e.releaseDate ?? ''),
+            title: e.title ?? '',
+            voteAverage: e.voteAverage?.toDouble() ?? 0,
+            voteCount: e.voteCount ?? 0,
+          );
+        }).toList() ??
+        List.empty();
+  }
 }
 
 class MovieModel {

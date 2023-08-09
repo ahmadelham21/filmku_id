@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   final dioOptions = BaseOptions(
     baseUrl: AppConstants.baseUrl,
     queryParameters: {'api_key': AppConstants.apikey},
@@ -18,7 +19,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.movieRepository});
+  const MyApp({Key? key, required this.movieRepository}) : super(key: key);
 
   final MovieRepository movieRepository;
 
@@ -26,8 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (_) => MovieGetDiscoverProvider(movieRepository))
+        ChangeNotifierProvider(create: (_) => MovieGetDiscoverProvider(movieRepository)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
