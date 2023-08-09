@@ -9,7 +9,7 @@ class MovieRepositoryimpl implements MovieRepository {
   MovieRepositoryimpl(this._dio);
 
   @override
-  Future<Either<String, MovieResponseModel>> getDiscover({int page = 1}) async {
+  Future<Either<String, MovieResponseResponse>> getDiscover({int page = 1}) async {
     try {
       final result = await _dio.get(
         '/discover/movie',
@@ -17,7 +17,7 @@ class MovieRepositoryimpl implements MovieRepository {
       );
 
       if (result.statusCode == 200 && result.data != null) {
-        final model = MovieResponseModel.fromJson(result.data);
+        final model = MovieResponseResponse.fromJson(result.data);
         return Right(model);
       }
 

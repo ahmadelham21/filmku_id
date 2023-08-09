@@ -31,9 +31,10 @@ class MovieGetDiscoverProvider with ChangeNotifier {
       },
       (response) {
         _movies.clear();
-        _movies.addAll(response.results);
+        _movies.addAll(response.toMovieModels);
         _isLoading = false;
         response.results;
+        notifyListeners();
         return null;
       },
     );

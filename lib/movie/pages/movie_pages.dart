@@ -8,15 +8,14 @@ class MoviePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<MovieGetDiscoverProvider>().getDiscover(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movie DB'),
+        title: const Text('Movie DB'),
       ),
       body: Consumer<MovieGetDiscoverProvider>(
         builder: (_, provider, __) {
           if (provider.isLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -34,7 +33,7 @@ class MoviePage extends StatelessWidget {
             );
           }
 
-          return Center(
+          return const Center(
             child: Text('not found discover'),
           );
         },
