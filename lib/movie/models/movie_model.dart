@@ -4,7 +4,8 @@ class MovieResponseResponse {
   int? totalPages;
   int? totalResults;
 
-  MovieResponseResponse({this.page, this.results, this.totalPages, this.totalResults});
+  MovieResponseResponse(
+      {this.page, this.results, this.totalPages, this.totalResults});
 
   MovieResponseResponse.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -111,6 +112,8 @@ extension MovieModelMapper on MovieResponseResponse {
             title: e.title ?? '',
             voteAverage: e.voteAverage?.toDouble() ?? 0,
             voteCount: e.voteCount ?? 0,
+            backdropPath: e.backdropPath ?? '',
+            posterPath: e.posterPath ?? '',
           );
         }).toList() ??
         List.empty();
