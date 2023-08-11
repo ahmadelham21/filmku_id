@@ -27,11 +27,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => MovieGetDiscoverProvider(movieRepository)),
+        ChangeNotifierProvider(
+            create: (_) => MovieGetDiscoverProvider(movieRepository)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter demo',
+        title: 'Filmku id',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
